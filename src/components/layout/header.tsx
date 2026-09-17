@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 const navItems = [
   { to: "/", label: "홈" },
   { to: "/about", label: "소개" },
+  { to: "/examples/query", label: "서버 상태" },
 ] as const;
 
 /**
