@@ -5,6 +5,22 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React Frontend Starter Kit</title>
+    <script>
+      // 초기 렌더 깜빡임 방지: 저장된 테마를 React 실행 전에 먼저 적용한다
+      (() => {
+        try {
+          const stored = localStorage.getItem("app-theme");
+          const theme = stored ? JSON.parse(stored).state?.theme : "system";
+          const isDark =
+            theme === "dark" ||
+            ((!theme || theme === "system") &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", isDark);
+        } catch {
+          // localStorage 접근이 막힌 환경에서는 기본 테마를 사용한다
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

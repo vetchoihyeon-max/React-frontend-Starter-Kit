@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 /** 헤더 내비게이션 항목 정의 */
 const navItems = [
   { to: "/", label: "홈" },
   { to: "/about", label: "소개" },
   { to: "/examples/query", label: "서버 상태" },
+  { to: "/examples/store", label: "클라이언트 상태" },
 ] as const;
 
 /**
@@ -30,6 +32,9 @@ export function Header() {
             </li>
           ))}
         </ul>
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
       </nav>
     </header>
   );

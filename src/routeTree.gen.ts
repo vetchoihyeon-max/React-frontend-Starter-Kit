@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ExamplesQueryRouteImport } from './routes/examples/query'
+import { Route as ExamplesStoreRouteImport } from './routes/examples/store'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const ExamplesQueryRoute = ExamplesQueryRouteImport.update({
   path: '/examples/query',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExamplesStoreRoute = ExamplesStoreRouteImport.update({
+  id: '/examples/store',
+  path: '/examples/store',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/examples/query': typeof ExamplesQueryRoute
+  '/examples/store': typeof ExamplesStoreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/examples/query': typeof ExamplesQueryRoute
+  '/examples/store': typeof ExamplesStoreRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/examples/query': typeof ExamplesQueryRoute
+  '/examples/store': typeof ExamplesStoreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/examples/query'
+  fullPaths: '/' | '/about' | '/examples/query' | '/examples/store'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/examples/query'
-  id: '__root__' | '/' | '/about' | '/examples/query'
+  to: '/' | '/about' | '/examples/query' | '/examples/store'
+  id: '__root__' | '/' | '/about' | '/examples/query' | '/examples/store'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ExamplesQueryRoute: typeof ExamplesQueryRoute
+  ExamplesStoreRoute: typeof ExamplesStoreRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExamplesQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/examples/store': {
+      id: '/examples/store'
+      path: '/examples/store'
+      fullPath: '/examples/store'
+      preLoaderRoute: typeof ExamplesStoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ExamplesQueryRoute: ExamplesQueryRoute,
+  ExamplesStoreRoute: ExamplesStoreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

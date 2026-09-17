@@ -4,7 +4,11 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createQueryClient } from "./lib/query-client";
 import { createRouter } from "./router";
+import { watchSystemTheme } from "./stores/theme-store";
 import "./styles/globals.css";
+
+// 시스템 테마 변경을 앱 전체 수명 동안 구독한다
+watchSystemTheme();
 
 const queryClient = createQueryClient();
 const router = createRouter(queryClient);
