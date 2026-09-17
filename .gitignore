@@ -27,3 +27,6 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+
+# TanStack Router 임시 파일
+.tanstack
