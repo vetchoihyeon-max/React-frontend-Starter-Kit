@@ -12,6 +12,8 @@ import { Toaster } from "@/components/ui/sonner";
  */
 export interface RouterContext {
   queryClient: QueryClient;
+  /** 컴포넌트 밖에서 인증 여부를 읽기 위한 가드 */
+  auth: { readonly isAuthenticated: boolean };
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({

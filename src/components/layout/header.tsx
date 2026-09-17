@@ -1,5 +1,7 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/auth-store";
 
 /** 헤더 내비게이션 항목 정의 */
 const navItems = [
@@ -8,6 +10,7 @@ const navItems = [
   { to: "/examples/query", label: "서버 상태" },
   { to: "/examples/store", label: "클라이언트 상태" },
   { to: "/examples/form", label: "폼" },
+  { to: "/dashboard", label: "대시보드" },
 ] as const;
 
 /**
@@ -15,6 +18,16 @@ const navItems = [
  * 현재 경로와 일치하는 링크에 활성 스타일을 적용한다
  */
 export function Header() {
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
+
+  /** 로그아웃 후 홈으로 이동한다 */
+  const handleLogout = () => {
+    logout();
+    navigate({ to: "/" });
+  };
+
   return (
     <header className="border-border border-b bg-background">
       <nav className="mx-auto flex h-14 max-w-5xl items-center gap-6 px-4">
@@ -33,7 +46,16 @@ export function Header() {
             </li>
           ))}
         </ul>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-2">
+          {user ? (
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
+              로그아웃
+            </Button>
+          ) : (
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/login">로그인</Link>
+            </Button>
+          )}
           <ThemeToggle />
         </div>
       </nav>
