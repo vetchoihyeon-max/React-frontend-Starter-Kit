@@ -1,10 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './styles/globals.css'
-import App from './App.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "./styles/globals.css";
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+  throw new Error("#root 엘리먼트를 찾을 수 없습니다. index.html을 확인하세요.");
+}
+
+createRoot(rootElement).render(
   <StrictMode>
     <App />
   </StrictMode>,
-)
+);
