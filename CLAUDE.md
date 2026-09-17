@@ -1,0 +1,41 @@
+# 프로젝트 규칙
+
+Vite + React + TypeScript 기반 프론트엔드 스타터 킷입니다.
+전체 구조와 사용법은 `README.md`를 참고하세요.
+
+## 자주 쓰는 명령어
+
+- 개발 서버: `npm run dev`
+- 빌드: `npm run build`
+- 테스트: `npm run test`
+- 린트: `npm run lint` (자동 수정은 `npm run lint:fix`)
+- 타입 검사: `npm run typecheck`
+
+작업을 마치기 전에 `npm run lint`, `npm run typecheck`, `npm run test`가 모두 통과해야 합니다.
+
+## 코딩 규칙
+
+- 변수명과 함수명은 camelCase, 컴포넌트는 PascalCase를 사용합니다.
+- 주석과 JSDoc은 한국어로 작성합니다. 함수에는 역할을 설명하는 JSDoc을 답니다.
+- `console`을 직접 호출하지 말고 `src/lib/logger.ts`의 `logger`를 사용합니다.
+- 환경변수는 `import.meta.env`를 직접 읽지 말고 `src/lib/env.ts`의 `env`를 사용합니다.
+- HTTP 요청은 `src/lib/api-client.ts`의 `apiClient`를 통해 보냅니다.
+- API 응답은 zod 스키마로 검증한 뒤 사용합니다.
+
+## 디렉터리 규칙
+
+- 라우트는 `src/routes/` 아래 파일 위치가 곧 URL 경로입니다.
+- 도메인 로직은 `src/features/<도메인>/`에 `schemas.ts`, `api.ts`, `queries.ts`로 나눕니다.
+- 서버 데이터는 TanStack Query로, 전역 UI 상태는 Zustand로 관리합니다.
+- 공용 레이아웃 컴포넌트는 `src/components/layout/`에 둡니다.
+
+## 편집 금지 파일
+
+- `src/routeTree.gen.ts`: TanStack Router가 자동 생성합니다.
+- `src/components/ui/**`: shadcn CLI가 관리하며 린트 대상에서 제외됩니다.
+  스타일 변경이 필요할 때만 직접 수정합니다.
+
+## 커밋
+
+- 커밋 메시지는 한국어로 작성합니다.
+- 커밋 전 pre-commit 훅이 스테이징된 파일에 `biome check --write`를 실행합니다.

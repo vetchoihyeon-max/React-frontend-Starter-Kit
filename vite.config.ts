@@ -17,4 +17,24 @@ export default defineConfig({
       "@": path.resolve(import.meta.dirname, "./src"),
     },
   },
+  build: {
+    // Vite 8부터 rollupOptions 대신 rolldownOptions를 사용한다
+    rolldownOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (!id.includes("node_modules")) {
+            return;
+          }
+
+          if (id.includes("react-dom") || id.includes("/react/") || id.includes("scheduler")) {
+            return "react-vendor";
+          }
+
+          if (id.includes("@tanstack")) {
+            return "tanstack-vendor";
+          }
+        },
+      },
+    },
+  },
 });
