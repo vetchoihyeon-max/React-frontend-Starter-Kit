@@ -7,6 +7,7 @@ const navItems = [
   { to: "/about", label: "소개" },
   { to: "/examples/query", label: "서버 상태" },
   { to: "/examples/store", label: "클라이언트 상태" },
+  { to: "/examples/form", label: "폼" },
 ] as const;
 
 /**

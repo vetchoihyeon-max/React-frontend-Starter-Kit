@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ExamplesFormRouteImport } from './routes/examples/form'
 import { Route as ExamplesQueryRouteImport } from './routes/examples/query'
 import { Route as ExamplesStoreRouteImport } from './routes/examples/store'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamplesFormRoute = ExamplesFormRouteImport.update({
+  id: '/examples/form',
+  path: '/examples/form',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExamplesQueryRoute = ExamplesQueryRouteImport.update({
@@ -38,12 +44,14 @@ const ExamplesStoreRoute = ExamplesStoreRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/examples/form': typeof ExamplesFormRoute
   '/examples/query': typeof ExamplesQueryRoute
   '/examples/store': typeof ExamplesStoreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/examples/form': typeof ExamplesFormRoute
   '/examples/query': typeof ExamplesQueryRoute
   '/examples/store': typeof ExamplesStoreRoute
 }
@@ -51,20 +59,29 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/examples/form': typeof ExamplesFormRoute
   '/examples/query': typeof ExamplesQueryRoute
   '/examples/store': typeof ExamplesStoreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/examples/query' | '/examples/store'
+  fullPaths:
+    '/' | '/about' | '/examples/form' | '/examples/query' | '/examples/store'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/examples/query' | '/examples/store'
-  id: '__root__' | '/' | '/about' | '/examples/query' | '/examples/store'
+  to: '/' | '/about' | '/examples/form' | '/examples/query' | '/examples/store'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/examples/form'
+    | '/examples/query'
+    | '/examples/store'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ExamplesFormRoute: typeof ExamplesFormRoute
   ExamplesQueryRoute: typeof ExamplesQueryRoute
   ExamplesStoreRoute: typeof ExamplesStoreRoute
 }
@@ -83,6 +100,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/examples/form': {
+      id: '/examples/form'
+      path: '/examples/form'
+      fullPath: '/examples/form'
+      preLoaderRoute: typeof ExamplesFormRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/examples/query': {
@@ -105,6 +129,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ExamplesFormRoute: ExamplesFormRoute,
   ExamplesQueryRoute: ExamplesQueryRoute,
   ExamplesStoreRoute: ExamplesStoreRoute,
 }

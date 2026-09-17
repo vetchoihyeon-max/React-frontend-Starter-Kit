@@ -4,6 +4,7 @@ import { createRootRouteWithContext, Link, Outlet } from "@tanstack/react-router
 import { DevTools } from "@/components/layout/devtools";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 
 /**
  * 라우터 전역 컨텍스트 타입
@@ -27,6 +28,7 @@ function RootLayout() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
         <Outlet />
       </main>
+      <Toaster />
       <DevTools />
     </div>
   );
