@@ -42,6 +42,13 @@ Vite + React + TypeScript 기반 프론트엔드 스타터 킷입니다.
 - `src/components/ui/**`: shadcn CLI가 관리하며 린트 대상에서 제외됩니다.
   스타일 변경이 필요할 때만 직접 수정합니다.
 
+## PWA
+
+- 서비스 워커는 빌드에서만 동작합니다. 개발 서버에서는 꺼져 있습니다.
+- API 응답은 캐시하지 않습니다. 캐싱이 필요하면 `vite.config.ts`의 `workbox.runtimeCaching`에 추가합니다.
+- 아이콘은 `public/favicon.svg`에서 생성합니다. 원본 교체 후 `npm run generate:pwa-assets`를 실행합니다.
+- `public/`의 생성된 아이콘 파일은 직접 편집하지 않습니다.
+
 ## 환경변수
 
 - 기본값은 커밋된 `.env`에 둡니다. 이 파일은 개발과 프로덕션 빌드 모두에서 읽힙니다.

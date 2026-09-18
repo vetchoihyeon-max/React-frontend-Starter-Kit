@@ -4,6 +4,7 @@ import { createRootRouteWithContext, Link, Outlet } from "@tanstack/react-router
 import { useTranslation } from "react-i18next";
 import { DevTools } from "@/components/layout/devtools";
 import { Header } from "@/components/layout/header";
+import { PwaUpdatePrompt } from "@/components/layout/pwa-update-prompt";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -32,6 +33,7 @@ function RootLayout() {
         <Outlet />
       </main>
       <Toaster />
+      <PwaUpdatePrompt />
       <DevTools />
     </div>
   );

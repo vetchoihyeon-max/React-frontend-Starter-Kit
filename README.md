@@ -19,6 +19,7 @@ Vite, React, TypeScript, Tailwind CSS 기반의 프론트엔드 스타터 킷입
 | HTTP | ky | fetch 기반 경량 HTTP 클라이언트 |
 | 린트/포맷 | Biome | 린터와 포매터 통합 |
 | 다국어 | i18next + react-i18next | 한국어/영어 번역과 언어 감지 |
+| PWA | vite-plugin-pwa | 설치 가능한 앱, 오프라인 지원, 버전 갱신 안내 |
 | 테스트 | Vitest + Testing Library + MSW | 단위/통합 테스트와 API 목킹 |
 | E2E | Playwright | 실제 브라우저에서 시나리오 검증 |
 | CI | GitHub Actions | 린트, 타입 검사, 테스트, 빌드 자동화 |
@@ -56,6 +57,7 @@ npm run dev
 | `npm run test:coverage` | 커버리지 리포트 생성 |
 | `npm run test:e2e` | Playwright E2E 테스트 실행 |
 | `npm run test:e2e:ui` | Playwright UI 모드로 실행 |
+| `npm run generate:pwa-assets` | `public/favicon.svg`로 PWA 아이콘 재생성 |
 
 ## 환경변수
 
@@ -191,6 +193,31 @@ name: z.string().min(2, "validation.nameMin"),
 언어는 저장된 선택을 먼저 보고, 없으면 브라우저 언어를 따릅니다.
 다국어가 필요 없다면 `src/lib/i18n.ts`, `src/locales/`, `LanguageToggle`을 지우고
 `t("...")` 호출을 문자열로 되돌리면 됩니다.
+
+### PWA 다루기
+
+`vite-plugin-pwa`가 빌드 시 서비스 워커와 웹 앱 매니페스트를 만듭니다.
+개발 서버에서는 서비스 워커를 끄고 HMR을 그대로 쓰므로, 동작 확인은 빌드 후에 합니다.
+
+```bash
+npm run build && npm run preview
+```
+
+기본 설정은 앱 셸(JS, CSS, HTML, 아이콘, 폰트)만 미리 캐시합니다.
+API 응답은 캐시하지 않고 항상 네트워크로 보냅니다. 캐싱 전략은 데이터 성격에 따라
+달라지므로, 필요하면 `vite.config.ts`의 `workbox.runtimeCaching`에 규칙을 추가하세요.
+
+새 버전이 배포되면 화면 하단에 갱신 토스트가 뜨고, 사용자가 누를 때 새로고침합니다.
+묻지 않고 바로 갱신하려면 `registerType`을 `autoUpdate`로 바꿉니다.
+
+아이콘은 `public/favicon.svg` 하나에서 생성됩니다. 원본을 교체한 뒤 다시 만드세요.
+
+```bash
+npm run generate:pwa-assets
+```
+
+PWA가 필요 없다면 `vite.config.ts`의 `VitePWA` 블록, `pwa-assets.config.ts`,
+`src/components/layout/pwa-update-prompt.tsx`, `e2e/pwa.spec.ts`를 지우면 됩니다.
 
 ### shadcn 컴포넌트 추가하기
 

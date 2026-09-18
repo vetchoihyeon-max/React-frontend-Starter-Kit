@@ -96,5 +96,11 @@
     "myInfoDescription": "Values stored in the auth store.",
     "name": "Name",
     "email": "Email"
+  },
+  "pwa": {
+    "updateTitle": "A new version is available",
+    "updateDescription": "Reload now to switch to the latest version.",
+    "update": "Reload",
+    "offlineReady": "Ready to work offline."
   }
 }
