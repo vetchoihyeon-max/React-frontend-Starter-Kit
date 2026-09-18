@@ -2,6 +2,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { initI18n, syncDocumentLanguage } from "./lib/i18n";
 import { logger } from "./lib/logger";
 import { createQueryClient } from "./lib/query-client";
 import { createRouter } from "./router";
@@ -46,6 +47,10 @@ function renderBootError(error: unknown, container: HTMLElement) {
 try {
   // 시스템 테마 변경을 앱 전체 수명 동안 구독한다
   watchSystemTheme();
+
+  // 번역 리소스를 등록하고 html의 lang 속성을 현재 언어와 맞춘다
+  initI18n();
+  syncDocumentLanguage();
 
   const queryClient = createQueryClient();
   const router = createRouter(queryClient);

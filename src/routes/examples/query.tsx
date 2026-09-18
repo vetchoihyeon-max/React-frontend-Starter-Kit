@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { postListQueryOptions } from "@/features/example/queries";
 
@@ -11,15 +12,14 @@ export const Route = createFileRoute("/examples/query")({
 
 /** TanStack Query 사용 예제 페이지 */
 function QueryExamplePage() {
+  const { t } = useTranslation();
   const { data: posts } = useSuspenseQuery(postListQueryOptions());
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <h1 className="font-bold text-2xl">서버 상태 예제</h1>
-        <p className="text-muted-foreground text-sm">
-          라우트 loader에서 프리패치하고 컴포넌트에서 useSuspenseQuery로 읽는 패턴입니다.
-        </p>
+        <h1 className="font-bold text-2xl">{t("queryExample.title")}</h1>
+        <p className="text-muted-foreground text-sm">{t("queryExample.description")}</p>
       </div>
       <ul className="flex flex-col gap-3">
         {posts.map((post) => (

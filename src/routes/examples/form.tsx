@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute } from "@tanstack/react-router";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,23 +17,33 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { roleOptions, type SignUpInput, signUpSchema } from "@/features/example/schemas";
+import { isTranslationKey } from "@/lib/i18n";
 import { logger } from "@/lib/logger";
 
 export const Route = createFileRoute("/examples/form")({
   component: FormExamplePage,
 });
 
-/** 필드 하위에 표시되는 에러 메시지 */
-function FieldError({ message }: { message?: string }) {
-  if (!message) {
+/**
+ * 필드 하위에 표시되는 에러 메시지
+ * 스키마가 담아둔 번역 키를 현재 언어로 바꿔 보여준다
+ */
+function FieldError({ messageKey }: { messageKey?: string }) {
+  const { t } = useTranslation();
+
+  if (!messageKey) {
     return null;
   }
+
+  // 등록되지 않은 키라면 원문을 그대로 보여준다
+  const message = isTranslationKey(messageKey) ? t(messageKey) : messageKey;
 
   return <p className="text-destructive text-sm">{message}</p>;
 }
 
 /** react-hook-form + zod 폼 예제 페이지 */
 function FormExamplePage() {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -54,64 +65,68 @@ function FormExamplePage() {
    */
   const onSubmit = (values: SignUpInput) => {
     logger.debug("폼 제출 값", values);
-    toast.success("제출이 완료되었습니다.", { description: `${values.name}님 환영합니다.` });
+    toast.success(t("formExample.successTitle"), {
+      description: t("formExample.successDescription", { name: values.name }),
+    });
     reset();
   };
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <h1 className="font-bold text-2xl">폼 예제</h1>
-        <p className="text-muted-foreground text-sm">
-          zod 스키마로 검증하고 react-hook-form으로 상태를 관리하는 패턴입니다.
-        </p>
+        <h1 className="font-bold text-2xl">{t("formExample.title")}</h1>
+        <p className="text-muted-foreground text-sm">{t("formExample.description")}</p>
       </div>
       <Card className="max-w-lg">
         <CardHeader>
-          <CardTitle>가입 정보</CardTitle>
-          <CardDescription>모든 필수 항목을 입력해 주세요.</CardDescription>
+          <CardTitle>{t("formExample.cardTitle")}</CardTitle>
+          <CardDescription>{t("formExample.cardDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5" noValidate>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="name">이름</Label>
-              <Input id="name" placeholder="홍길동" {...register("name")} />
-              <FieldError message={errors.name?.message} />
+              <Label htmlFor="name">{t("formExample.name")}</Label>
+              <Input
+                id="name"
+                placeholder={t("formExample.namePlaceholder")}
+                {...register("name")}
+              />
+              <FieldError messageKey={errors.name?.message} />
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email">이메일</Label>
+              <Label htmlFor="email">{t("formExample.email")}</Label>
               <Input id="email" type="email" placeholder="you@example.com" {...register("email")} />
-              <FieldError message={errors.email?.message} />
+              <FieldError messageKey={errors.email?.message} />
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="role">역할</Label>
+              <Label htmlFor="role">{t("formExample.role")}</Label>
               <Controller
                 control={control}
                 name="role"
                 render={({ field }) => (
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger id="role">
-                      <SelectValue placeholder="역할을 선택하세요" />
+                      <SelectValue placeholder={t("formExample.rolePlaceholder")} />
                     </SelectTrigger>
                     <SelectContent>
                       {roleOptions.map((option) => (
                         <SelectItem key={option.value} value={option.value}>
-                          {option.label}
+                          {t(option.labelKey)}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 )}
               />
-              <FieldError message={errors.role?.message} />
+              <FieldError messageKey={errors.role?.message} />
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="introduction">소개 (선택)</Label>
+              <Label htmlFor="introduction">{t("formExample.introduction")}</Label>
               <Textarea id="introduction" rows={3} {...register("introduction")} />
-              <FieldError message={errors.introduction?.message} />
+              <FieldError messageKey={errors.introduction?.message} />
             </div>
 
             <div className="flex flex-col gap-2">
@@ -127,13 +142,13 @@ function FormExamplePage() {
                     />
                   )}
                 />
-                <Label htmlFor="agreed">이용약관에 동의합니다.</Label>
+                <Label htmlFor="agreed">{t("formExample.agreed")}</Label>
               </div>
-              <FieldError message={errors.agreed?.message} />
+              <FieldError messageKey={errors.agreed?.message} />
             </div>
 
             <Button type="submit" disabled={isSubmitting}>
-              제출
+              {t("common.submit")}
             </Button>
           </form>
         </CardContent>

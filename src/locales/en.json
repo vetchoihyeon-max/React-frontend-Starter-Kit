@@ -1,0 +1,100 @@
+{
+  "common": {
+    "appName": "React Starter Kit",
+    "goHome": "Go to home",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "submit": "Submit"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "query": "Server state",
+    "store": "Client state",
+    "form": "Form",
+    "dashboard": "Dashboard"
+  },
+  "theme": {
+    "change": "Change theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "change": "Change language",
+    "ko": "한국어",
+    "en": "English"
+  },
+  "home": {
+    "title": "React Frontend Starter Kit",
+    "description": "A project template with routing, state management, styling, and testing already wired up.",
+    "stack": {
+      "base": "Fast dev server with type safety",
+      "style": "Utility-first styling and accessible components",
+      "router": "File-based routing with type-safe navigation"
+    }
+  },
+  "about": {
+    "title": "About",
+    "description": "This starter kit exists to remove the setup work that repeats at the start of every project. Build tooling, routing, server and client state, form validation, testing, linting, and CI all come connected."
+  },
+  "error": {
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The address you requested does not exist.",
+    "title": "Something went wrong",
+    "unknown": "An unknown error occurred."
+  },
+  "queryExample": {
+    "title": "Server state example",
+    "description": "Prefetch in the route loader, then read it with useSuspenseQuery in the component."
+  },
+  "storeExample": {
+    "title": "Client state example",
+    "description": "Subscribe to a Zustand store with selectors. Theme switching works the same way.",
+    "counter": "Counter",
+    "counterDescription": "Actions are defined inside the store.",
+    "increment": "Increment",
+    "decrement": "Decrement",
+    "reset": "Reset"
+  },
+  "formExample": {
+    "title": "Form example",
+    "description": "Validate with a zod schema and manage state with react-hook-form.",
+    "cardTitle": "Sign-up details",
+    "cardDescription": "Please fill in every required field.",
+    "name": "Name",
+    "namePlaceholder": "Jane Doe",
+    "email": "Email",
+    "role": "Role",
+    "rolePlaceholder": "Select a role",
+    "introduction": "Introduction (optional)",
+    "agreed": "I agree to the terms of service.",
+    "successTitle": "Submitted successfully.",
+    "successDescription": "Welcome, {{name}}.",
+    "roles": {
+      "developer": "Developer",
+      "designer": "Designer",
+      "pm": "Product manager"
+    }
+  },
+  "validation": {
+    "nameMin": "Name must be at least 2 characters.",
+    "emailInvalid": "Enter a valid email address.",
+    "roleRequired": "Select a role.",
+    "introductionMax": "Introduction must be 200 characters or fewer.",
+    "agreedRequired": "You must agree to the terms."
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "loginDescription": "A demo of the route guard. Any value signs you in.",
+    "loginCardTitle": "Account details",
+    "loginCardDescription": "The email you enter is stored as is.",
+    "demoUserName": "Demo user",
+    "dashboardTitle": "Dashboard",
+    "dashboardDescription": "A protected page only signed-in users can reach.",
+    "myInfo": "My info",
+    "myInfoDescription": "Values stored in the auth store.",
+    "name": "Name",
+    "email": "Email"
+  }
+}
